@@ -1,0 +1,35 @@
+
+.vs/HyperBook.App/DesignTimeBuild/.dtbcache.v2
+*.v2
+.vs/HyperBook.App/v16/.suo
+HyperBookApp.Api/.config
+HyperBookApp.Api/bin
+HyperBookApp.Api/obj
+HyperBookApp.Api/obj/Properties/PublishProfiles/HyperBookAppApi - Web Deploy.pubxml
+HyperBookApp.Api/obj/Properties/PublishProfiles/HyperBookAppApi - Web Deploy.pubxml.user
+HyperBookApp.Api.Interfaces/bin
+HyperBookApp.Api.Interfaces/obj
+HyperBookApp.Api.Models/bin
+HyperBookApp.Api.Models/obj
+HyperBookApp.Api.Services/bin
+HyperBookApp.Api.Services/obj
+HyperBook.App.Api/Properties/PublishProfiles/HyperBookAppApi - Web Deploy.pubxml.user
+HyperBook.App.Api/Properties/PublishProfiles/HyperBookAppApi - Web Deploy.pubxml
+HyperBook.App.Api/obj/Debug/net5.0/project.razor.json
+HyperBook.App.Api/obj/Debug/net5.0/HyperBook.App.Api.GeneratedMSBuildEditorConfig.editorconfig
+HyperBook.App.Api/obj/Debug/net5.0/HyperBook.App.Api.csproj.AssemblyReference.cache
+HyperBook.App.Api/obj/Debug/net5.0/HyperBook.App.Api.AssemblyInfo.cs
+HyperBook.App.Api/obj/Debug/net5.0/HyperBook.App.Api.AssemblyInfoInputs.cache
+HyperBook.App.Api/obj/Debug/net5.0/.NETCoreApp,Version=v5.0.AssemblyAttributes.cs
+HyperBook.App.Interfaces/obj/Debug/net5.0/.NETCoreApp,Version=v5.0.AssemblyAttributes.cs
+HyperBook.App.Interfaces/obj/Debug/net5.0/HyperBook.App.Interfaces.AssemblyInfo.cs
+HyperBook.App.Interfaces/obj/Debug/net5.0/HyperBook.App.Interfaces.GeneratedMSBuildEditorConfig.editorconfig
+HyperBook.App.Interfaces/obj/Debug/net5.0/HyperBook.App.Interfaces.AssemblyInfoInputs.cache
+HyperBook.App.Models/obj/Debug/net5.0/HyperBook.App.Models.AssemblyInfoInputs.cache
+HyperBook.App.Models/obj/Debug/net5.0/HyperBook.App.Models.AssemblyInfo.cs
+HyperBook.App.Models/obj/Debug/net5.0/.NETCoreApp,Version=v5.0.AssemblyAttributes.cs
+HyperBook.App.Models/obj/Debug/net5.0/HyperBook.App.Models.GeneratedMSBuildEditorConfig.editorconfig
+HyperBook.App.Services/obj/Debug/net5.0/HyperBook.App.Services.AssemblyInfo.cs
+HyperBook.App.Services/obj/Debug/net5.0/.NETCoreApp,Version=v5.0.AssemblyAttributes.cs
+HyperBook.App.Services/obj/Debug/net5.0/HyperBook.App.Services.AssemblyInfoInputs.cache
+HyperBook.App.Services/obj/Debug/net5.0/HyperBook.App.Services.GeneratedMSBuildEditorConfig.editorconfig
