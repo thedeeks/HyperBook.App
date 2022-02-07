@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,17 +14,29 @@ using System.Reflection;
 using System.Threading.Tasks;
 using HyperBook.App.Services;
 using HyperBook.App.Interfaces;
+using HyperBook.App.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace HyperBook.App.Api
 {
     public class Startup
     {
+
+        /// <summary>
+        /// Applications Key/Value configuration properties
+        /// </summary>
+        public IConfiguration _configuration { get; }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="configuration">setting the _configuration</param>
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appSettings.json").Build();
         }
 
-        public IConfiguration Configuration { get; }
+        
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -109,8 +119,13 @@ namespace HyperBook.App.Api
                 x.AddPolicy("CORS Policy", corsBuilder.Build());
             });
 
+            string conn = _configuration.GetConnectionString("HyperBookDB");
+            //Adding the DBContext
+            services.AddDbContext<HyperBookContext>(options => options.UseSqlServer(_configuration.GetConnectionString("HyperBookDB")));
+
             //Inject singletons
             services.AddScoped<ICitiesService, CitiesService>();
+            services.AddScoped<IUsersService, UsersService>();
         }
     }
 }

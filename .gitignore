@@ -33,3 +33,4 @@ HyperBook.App.Services/obj/Debug/net5.0/HyperBook.App.Services.AssemblyInfo.cs
 HyperBook.App.Services/obj/Debug/net5.0/.NETCoreApp,Version=v5.0.AssemblyAttributes.cs
 HyperBook.App.Services/obj/Debug/net5.0/HyperBook.App.Services.AssemblyInfoInputs.cache
 HyperBook.App.Services/obj/Debug/net5.0/HyperBook.App.Services.GeneratedMSBuildEditorConfig.editorconfig
+*.config

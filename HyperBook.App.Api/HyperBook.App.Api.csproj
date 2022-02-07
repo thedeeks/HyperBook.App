@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HyperBook.App.Data\HyperBook.App.Data.csproj" />
     <ProjectReference Include="..\HyperBook.App.Services\HyperBook.App.Services.csproj" />
   </ItemGroup>
 

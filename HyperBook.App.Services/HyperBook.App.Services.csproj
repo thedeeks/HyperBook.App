@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HyperBook.App.Data\HyperBook.App.Data.csproj" />
     <ProjectReference Include="..\HyperBook.App.Interfaces\HyperBook.App.Interfaces.csproj" />
     <ProjectReference Include="..\HyperBook.App.Models\HyperBook.App.Models.csproj" />
   </ItemGroup>
