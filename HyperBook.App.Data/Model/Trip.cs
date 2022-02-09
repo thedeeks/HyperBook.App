@@ -8,7 +8,7 @@ namespace HyperBook.App.Data.Model
     public partial class Trip
     {
         public int Id { get; set; }
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public int PodSchedule { get; set; }
         public int StatusId { get; set; }
         public DateTime DateCreated { get; set; }

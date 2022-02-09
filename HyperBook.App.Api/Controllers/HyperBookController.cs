@@ -18,6 +18,8 @@ namespace HyperBook.App.Api.Controllers
         private ICitiesService _citiesService { get; set; }
 
         private IUsersService _usersService { get; set; }
+
+        private IStateService _stateService { get; set; }
         #endregion
 
         #region constructor
@@ -25,10 +27,11 @@ namespace HyperBook.App.Api.Controllers
         /// Constructor
         /// </summary>
         /// <returns></returns>
-        public HyperBookController(ICitiesService citiesService, IUsersService userService)
+        public HyperBookController(ICitiesService citiesService, IUsersService userService, IStateService stateService)
         {
             _citiesService = citiesService;
             _usersService = userService;
+            _stateService = stateService;
         }
         #endregion
 
@@ -40,6 +43,7 @@ namespace HyperBook.App.Api.Controllers
         /// <returns>Returns a list of CityWithInfoResponse object</returns>
         [ApiExplorerSettings(GroupName = "HyperBook")]
         [HttpGet("GetCitiesWithInfo")]
+        [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult GetCitiesWithInfo()
@@ -60,9 +64,12 @@ namespace HyperBook.App.Api.Controllers
         /// <summary>
         /// Logs the user in to the application
         /// </summary>        
-        /// <returns>UserId</returns>
+        /// <param name="email">user email</param>
+        /// <param name="password">user password</param>
+        /// <returns>UserId, FirstName, LastName, EmailAddress</returns>
         [ApiExplorerSettings(GroupName = "HyperBook")]
         [HttpGet("Login")]
+        [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult Login([Required]string email, [Required]string password)
@@ -82,18 +89,70 @@ namespace HyperBook.App.Api.Controllers
 
         /// <summary>
         /// Returns User Info
-        /// </summary>        
-        /// <returns>UserId</returns>
+        /// </summary>
+        /// <param name="userId">GUID</param>
+        /// <returns>UserId, Email, FirstName, LastName, Street, City, State, Zip, Phone</returns>
         [ApiExplorerSettings(GroupName = "HyperBook")]
-        [HttpGet("GetUser")]
+        [HttpGet("GetUserName")]
+        [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult GetUser([Required] int userId)
+        public IActionResult GetUserName([Required] Guid userId)
         {
             try
             {
                 //Returns a 200
-                return Ok(_usersService.GetUser(userId));
+                return Ok(_usersService.GetUserName(userId));
+            }
+            catch (Exception ex)
+            {
+                //Returns a 500
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// Returns a collection of pod schedules
+        /// </summary>
+        /// <param name="cityId">City From</param>
+        /// <param name="cityDestinationId">City To</param>
+        /// <returns>A collection of PodScheduleResponse objects</returns>
+        [ApiExplorerSettings(GroupName = "HyperBook")]
+        [HttpGet("GetPodSchedules")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult GetPodSchedules([Required] int cityId,[Required] int cityDestinationId)
+        {
+            try
+            {
+                //Returns a 200
+                return Ok(_citiesService.GetPodSchedule(cityId, cityDestinationId));
+            }
+            catch (Exception ex)
+            {
+                //Returns a 500
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// Returns a list of all states
+        /// </summary>
+        /// <returns>A collection of StateResponse Object</returns>
+        [ApiExplorerSettings(GroupName = "HyperBook")]
+        [HttpGet("GetStates")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult GetStates()
+        {
+            try
+            {
+                //Returns a 200
+                return Ok(_stateService.GetStates());
             }
             catch (Exception ex)
             {

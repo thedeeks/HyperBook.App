@@ -126,6 +126,7 @@ namespace HyperBook.App.Api
             //Inject singletons
             services.AddScoped<ICitiesService, CitiesService>();
             services.AddScoped<IUsersService, UsersService>();
+            services.AddScoped<IStateService, StateService>();
         }
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using HyperBook.App.Data.Model;
 
+
 #nullable disable
 
 namespace HyperBook.App.Data
@@ -25,7 +26,7 @@ namespace HyperBook.App.Data
         public virtual DbSet<Trip> Trips { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
-
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
@@ -36,15 +37,13 @@ namespace HyperBook.App.Data
                     .IsRequired()
                     .HasMaxLength(75);
 
+                entity.Property(e => e.State)
+                    .IsRequired()
+                    .HasMaxLength(2);
+
                 entity.Property(e => e.Timezone)
                     .IsRequired()
                     .HasMaxLength(75);
-
-                entity.HasOne(d => d.State)
-                    .WithMany(p => p.Cities)
-                    .HasForeignKey(d => d.StateId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Cities__StateId__60A75C0F");
             });
 
             modelBuilder.Entity<PodSchedule>(entity =>
@@ -120,50 +119,44 @@ namespace HyperBook.App.Data
                     .WithMany(p => p.Trips)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Trip__UserId__72C60C4A");
+                    .HasConstraintName("FK_Trip_Users");
             });
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.Property(e => e.City)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                entity.Property(e => e.UserId).ValueGeneratedNever();
+
+                entity.Property(e => e.AddressLine1).HasMaxLength(250);
+
+                entity.Property(e => e.AddressLine2).HasMaxLength(250);
+
+                entity.Property(e => e.City).HasMaxLength(50);
 
                 entity.Property(e => e.Email)
                     .IsRequired()
-                    .HasMaxLength(100);
+                    .HasMaxLength(254)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.FirstName)
                     .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.LastName)
                     .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.Password)
                     .IsRequired()
-                    .HasMaxLength(30);
+                    .HasMaxLength(128)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Phone)
                     .IsRequired()
                     .HasMaxLength(12);
 
-                entity.Property(e => e.Street)
-                    .IsRequired()
-                    .HasMaxLength(250);
+                entity.Property(e => e.State).HasMaxLength(2);
 
-                entity.Property(e => e.Zip)
-                    .IsRequired()
-                    .HasMaxLength(5);
-
-                entity.HasOne(d => d.StateNavigation)
-                    .WithMany(p => p.Users)
-                    .HasForeignKey(d => d.State)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Users__State__6A30C649");
+                entity.Property(e => e.Zip).HasMaxLength(5);
             });
 
             OnModelCreatingPartial(modelBuilder);

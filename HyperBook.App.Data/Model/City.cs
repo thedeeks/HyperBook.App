@@ -17,10 +17,9 @@ namespace HyperBook.App.Data.Model
         public string Name { get; set; }
         public float? Longitude { get; set; }
         public float? Latitude { get; set; }
-        public int StateId { get; set; }
+        public string State { get; set; }
         public string Timezone { get; set; }
 
-        public virtual State State { get; set; }
         public virtual ICollection<PodSchedule> PodScheduleCityFromNavigations { get; set; }
         public virtual ICollection<PodSchedule> PodScheduleCityToNavigations { get; set; }
     }
