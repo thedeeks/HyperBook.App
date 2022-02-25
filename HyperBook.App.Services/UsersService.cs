@@ -45,7 +45,7 @@ namespace HyperBook.App.Services
         /// Returns User Info
         /// </summary>        
         /// <returns>UserId, Email, FirstName, LastName, Street, City, State, Zip, Phone</returns>
-        public UserResponse GetUserName(Guid userId)
+        public UserResponse GetAccountInfo(Guid userId)
         {
             //Check for the user in DB
             var user = _hyperbookContext.Users.Where(w => w.UserId == userId).FirstOrDefault();

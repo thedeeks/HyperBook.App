@@ -12,13 +12,13 @@ namespace HyperBook.App.Interfaces
         /// <param name="email">user email</param>
         /// <param name="password">user password</param>
         /// <returns>UserId, Email, FirstName, LastName, Street, City, State, Zip, Phone</returns>
-        public UserResponse Login(string email, string password);
+        UserResponse Login(string email, string password);
 
 
         /// <summary>
         /// Returns User Info
         /// </summary>        
         /// <returns>Emai, FirstName, LastName</returns>
-        public UserResponse GetUserName(Guid userId);
+        UserResponse GetAccountInfo(Guid userId);
     }
 }

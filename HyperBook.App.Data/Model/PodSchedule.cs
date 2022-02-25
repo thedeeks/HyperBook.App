@@ -15,8 +15,7 @@ namespace HyperBook.App.Data.Model
         public int Id { get; set; }
         public int CityFrom { get; set; }
         public int CityTo { get; set; }
-        public DateTime DepartureTimeGmt { get; set; }
-        public DateTime ArrivalTimeGmt { get; set; }
+        public string DepartureWindow { get; set; }
         public decimal Price { get; set; }
 
         public virtual City CityFromNavigation { get; set; }

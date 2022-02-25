@@ -34,10 +34,11 @@ namespace HyperBook.App.Services
                         select new CityWithInfoResponse
                         {
                             Id = city.Id,
-                            City = city.Name,
+                            Name = city.Name,
                             Latitude = city.Latitude,
                             Longitude = city.Longitude,
-                            State = city.State
+                            State = city.State,
+                            Timezone = city.Timezone
                         };
 
             //return list of cities
@@ -65,8 +66,7 @@ namespace HyperBook.App.Services
                                Id = schedule.Id,
                                CityFrom = schedule.CityFrom,
                                CityTo = schedule.CityTo,
-                               DepartureTimeGmt = schedule.DepartureTimeGmt,
-                               ArrivalTimeGmt = schedule.ArrivalTimeGmt,
+                               DepartureWindow = schedule.DepartureWindow,                               
                                Price = schedule.Price
                            };
             }

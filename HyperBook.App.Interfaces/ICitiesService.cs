@@ -13,7 +13,7 @@ namespace HyperBook.App.Interfaces
         /// Returns a list of cities with information about them
         /// </summary>
         /// <returns>Returns a list of CityWithInfoResponse object</returns>
-        public IEnumerable<CityWithInfoResponse> GetCitiesWithInfo();
+        IEnumerable<CityWithInfoResponse> GetCitiesWithInfo();
 
 
         /// <summary>
@@ -23,6 +23,6 @@ namespace HyperBook.App.Interfaces
         /// <param name="cityDestinationId">City To</param>
         /// <returns>A collection of PodScheduleResponse objects</returns>
         /// [ApiExplorerSettings(GroupName = "HyperBook")]
-        public IEnumerable<PodScheduleResponse> GetPodSchedule(int cityId, int cityDestinationId);
+        IEnumerable<PodScheduleResponse> GetPodSchedule(int cityId, int cityDestinationId);
     }
 }

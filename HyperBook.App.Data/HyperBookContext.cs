@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using HyperBook.App.Data.Model;
 
-
 #nullable disable
 
 namespace HyperBook.App.Data
@@ -22,11 +21,13 @@ namespace HyperBook.App.Data
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<PodSchedule> PodSchedules { get; set; }
         public virtual DbSet<RefStatus> RefStatuses { get; set; }
-        public virtual DbSet<State> States { get; set; }
         public virtual DbSet<Trip> Trips { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
-        
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
@@ -50,13 +51,9 @@ namespace HyperBook.App.Data
             {
                 entity.ToTable("PodSchedule");
 
-                entity.Property(e => e.ArrivalTimeGmt)
-                    .HasColumnType("datetime")
-                    .HasColumnName("ArrivalTimeGMT");
-
-                entity.Property(e => e.DepartureTimeGmt)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DepartureTimeGMT");
+                entity.Property(e => e.DepartureWindow)
+                    .IsRequired()
+                    .HasMaxLength(75);
 
                 entity.Property(e => e.Price).HasColumnType("decimal(18, 0)");
 
@@ -80,19 +77,6 @@ namespace HyperBook.App.Data
                 entity.Property(e => e.Description)
                     .IsRequired()
                     .HasMaxLength(250);
-            });
-
-            modelBuilder.Entity<State>(entity =>
-            {
-                entity.Property(e => e.Abbreviation)
-                    .IsRequired()
-                    .HasMaxLength(2)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(75)
-                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Trip>(entity =>

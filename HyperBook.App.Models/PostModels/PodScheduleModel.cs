@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HyperBook.App.Models.ResponseModels
+namespace HyperBook.App.Models.PostModels
 {
-    public class PodScheduleResponse
+    public class PodScheduleModel
     {
-        public int Id { get; set; }
+        [Required]
         public int CityFrom { get; set; }
+        [Required]
         public int CityTo { get; set; }
+        [Required]
         public string DepartureWindow { get; set; }
+        [Required]
         public decimal Price { get; set; }
     }
 }

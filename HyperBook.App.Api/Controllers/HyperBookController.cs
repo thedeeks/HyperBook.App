@@ -19,7 +19,7 @@ namespace HyperBook.App.Api.Controllers
 
         private IUsersService _usersService { get; set; }
 
-        private IStateService _stateService { get; set; }
+        private IItineraryService _itineraryService { get; set; }
         #endregion
 
         #region constructor
@@ -27,11 +27,11 @@ namespace HyperBook.App.Api.Controllers
         /// Constructor
         /// </summary>
         /// <returns></returns>
-        public HyperBookController(ICitiesService citiesService, IUsersService userService, IStateService stateService)
+        public HyperBookController(ICitiesService citiesService, IUsersService userService, IItineraryService itineraryService)
         {
             _citiesService = citiesService;
             _usersService = userService;
-            _stateService = stateService;
+            _itineraryService = itineraryService;
         }
         #endregion
 
@@ -93,16 +93,16 @@ namespace HyperBook.App.Api.Controllers
         /// <param name="userId">GUID</param>
         /// <returns>UserId, Email, FirstName, LastName, Street, City, State, Zip, Phone</returns>
         [ApiExplorerSettings(GroupName = "HyperBook")]
-        [HttpGet("GetUserName")]
+        [HttpGet("GetAccountInfo")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult GetUserName([Required] Guid userId)
+        public IActionResult GetAccountInfo([Required] Guid userId)
         {
             try
             {
                 //Returns a 200
-                return Ok(_usersService.GetUserName(userId));
+                return Ok(_usersService.GetAccountInfo(userId));
             }
             catch (Exception ex)
             {
@@ -138,21 +138,23 @@ namespace HyperBook.App.Api.Controllers
         }
 
 
+
         /// <summary>
-        /// Returns a list of all states
+        /// Gets the list of trips for a user.
         /// </summary>
-        /// <returns>A collection of StateResponse Object</returns>
+        /// <param name="userId">User Id</param>
+        /// <returns>A collection of PodScheduleResponse objects</returns>
         [ApiExplorerSettings(GroupName = "HyperBook")]
-        [HttpGet("GetStates")]
+        [HttpGet("GetTrips")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult GetStates()
+        public IActionResult GetTrips(Guid userId)
         {
             try
             {
                 //Returns a 200
-                return Ok(_stateService.GetStates());
+                return Ok(_itineraryService.GetTrips(userId));
             }
             catch (Exception ex)
             {
@@ -160,6 +162,32 @@ namespace HyperBook.App.Api.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+
+
+        /// <summary>
+        /// Gets the list trip statuses
+        /// </summary>
+        /// <returns>A collection of PodScheduleResponse objects</returns>
+        [ApiExplorerSettings(GroupName = "HyperBook")]
+        [HttpGet("GetStatus")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult GetStatus()
+        {
+            try
+            {
+                //Returns a 200
+                return Ok(_itineraryService.GetStatus());
+            }
+            catch (Exception ex)
+            {
+                //Returns a 500
+                return StatusCode(500, ex.Message);
+            }
+        }
+
 
     }
 }
