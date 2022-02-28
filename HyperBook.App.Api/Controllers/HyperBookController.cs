@@ -187,7 +187,5 @@ namespace HyperBook.App.Api.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-
-
     }
 }

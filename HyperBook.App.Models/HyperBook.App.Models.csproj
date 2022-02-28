@@ -4,4 +4,8 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HyperBook.App.Data\HyperBook.App.Data.csproj" />
+  </ItemGroup>
+
 </Project>
