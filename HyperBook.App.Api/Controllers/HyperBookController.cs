@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using HyperBook.App.Interfaces;
 using System.ComponentModel.DataAnnotations;
+using HyperBook.App.Models.PutModels;
 
 namespace HyperBook.App.Api.Controllers
 {
@@ -180,6 +181,56 @@ namespace HyperBook.App.Api.Controllers
             {
                 //Returns a 200
                 return Ok(_itineraryService.GetStatus());
+            }
+            catch (Exception ex)
+            {
+                //Returns a 500
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// Gets the destinations from a particular city
+        /// </summary>
+        /// <param name="cityId">Id of the Departure city</param>
+        /// <returns>A collection of DestinationResponse  objects</returns>
+        [ApiExplorerSettings(GroupName = "HyperBook")]
+        [HttpGet("GetDestinations")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult GetDestinations([Required]int cityId)
+        {
+            try
+            {
+                //Returns a 200
+                return Ok(_itineraryService.GetDestinations(cityId));
+            }
+            catch (Exception ex)
+            {
+                //Returns a 500
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// Updates an existing User
+        /// </summary>
+        /// <param name="user">User Object</param>
+        [ApiExplorerSettings(GroupName = "HyperBook")]
+        [HttpPut("UpdateUser")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult UpdateUser([Required] UserUpdateModel user)
+        {
+            try
+            {
+                //Returns a 204
+                _usersService.UpdateUser(user);
+                return StatusCode(204);
             }
             catch (Exception ex)
             {

@@ -5,10 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HyperBook.App.Models.PostModels
+namespace HyperBook.App.Models.PutModels
 {
-    public class UserModel
+    public class UserUpdateModel
     {
+        [Required]
+        public Guid UserId { get; set; }
         [Required]
         public string Email { get; set; }
         [Required]

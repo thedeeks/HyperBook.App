@@ -7,6 +7,7 @@ using HyperBook.App.Interfaces;
 using HyperBook.App.Models.PostModels;
 using HyperBook.App.Data;
 using HyperBook.App.Data.Model;
+using System.Security.Cryptography;
 
 namespace HyperBook.App.Services
 {
@@ -58,7 +59,36 @@ namespace HyperBook.App.Services
                 throw new Exception("Last Name is required");
             }
 
-            
+            //Check for Address Line 1
+            if (string.IsNullOrEmpty(userModel.AddressLine1) || string.IsNullOrWhiteSpace(userModel.AddressLine1))
+            {
+                throw new Exception("AddressLine1 is required");
+            }
+
+            //Check for City
+            if (string.IsNullOrEmpty(userModel.City) || string.IsNullOrWhiteSpace(userModel.City))
+            {
+                throw new Exception("City is required");
+            }
+
+            //Check for State
+            if (string.IsNullOrEmpty(userModel.State) || string.IsNullOrWhiteSpace(userModel.State))
+            {
+                throw new Exception("State is required");
+            }
+
+            //Check for Zip
+            if (string.IsNullOrEmpty(userModel.Zip) || string.IsNullOrWhiteSpace(userModel.Zip))
+            {
+                throw new Exception("Zip is required");
+            }
+
+            //Check for Phone
+            if (string.IsNullOrEmpty(userModel.Phone) || string.IsNullOrWhiteSpace(userModel.Phone))
+            {
+                throw new Exception("Phone is required");
+            }
+
             //Validate maxlength for properties
             if (userModel.Email.Length > 254)
             {
@@ -110,8 +140,10 @@ namespace HyperBook.App.Services
                 throw new Exception("Phone maxlength(12) exceeded.");
             }
 
+            string hashedPassword = GetHash(userModel.Password);
+
             //Check if the user already exists
-            var existingUser = _hyperBookContext.Users.Where(w => w.Email.ToLower() == userModel.Email.ToLower() && w.Password.ToLower() == userModel.Password.ToLower()).FirstOrDefault();
+            var existingUser = _hyperBookContext.Users.Where(w => w.Email.ToLower() == userModel.Email.ToLower() && w.Password == hashedPassword).FirstOrDefault();
 
             //Throw an error if user already exists
             if (existingUser != null)
@@ -127,7 +159,7 @@ namespace HyperBook.App.Services
                 newUser.FirstName = userModel.FirstName;
                 newUser.LastName = userModel.LastName;
                 newUser.Email = userModel.Email;
-                newUser.Password = userModel.Password;
+                newUser.Password = hashedPassword;
                 newUser.AddressLine1 = userModel.AddressLine1;
                 newUser.AddressLine2 = userModel.AddressLine2;
                 newUser.City = userModel.City;
@@ -139,9 +171,9 @@ namespace HyperBook.App.Services
                 _hyperBookContext.Add(newUser);
                 _hyperBookContext.SaveChanges();
 
-
+                //Retrieve the newly added user
                 Guid newUserId = _hyperBookContext.Users.Where(w => w.Email.ToLower() == userModel.Email.ToLower() &&
-                    w.Password.ToLower() == userModel.Password.ToLower() && w.FirstName.ToLower() == userModel.FirstName.ToLower() 
+                    w.Password == hashedPassword && w.FirstName.ToLower() == userModel.FirstName.ToLower() 
                     && w.LastName.ToLower() == userModel.LastName.ToLower()).FirstOrDefault().UserId;
 
                 return newUserId.ToString();
@@ -407,6 +439,39 @@ namespace HyperBook.App.Services
             {
                 throw new Exception($"Failed to add a new trip. {ex.Message}");
             }
+        }
+
+
+        /// <summary>
+        /// Converts the plain text string to a SHA512Managed hash
+        /// </summary>
+        /// <param name="password">plain text password</param>
+        /// <returns>hashed password in string</returns>
+        private string GetHash(string password)
+        {
+
+            //Convert plain text to a byte array
+            byte[] passBytes = Encoding.UTF8.GetBytes(password);
+
+            SHA512 shaM = new SHA512Managed();
+
+            byte[] hashedPassBytes = shaM.ComputeHash(passBytes);
+
+            // Create a new Stringbuilder to collect the bytes
+            // and create a string.
+            var sBuilder = new StringBuilder();
+
+            // Loop through each byte of the hashed data
+            // and format each one as a hexadecimal string.
+            for (int i = 0; i < hashedPassBytes.Length; i++)
+            {
+                sBuilder.Append(hashedPassBytes[i].ToString("x2"));
+            }
+
+            // Return the hexadecimal string.
+            string hashedPassword = sBuilder.ToString();
+
+            return hashedPassword;
         }
     }
 }

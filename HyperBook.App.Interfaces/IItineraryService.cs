@@ -12,5 +12,7 @@ namespace HyperBook.App.Interfaces
         IEnumerable<TripResponse> GetTrips(Guid userId);
 
         IEnumerable<StatusResponse> GetStatus();
+
+        IEnumerable<DestinationResponse> GetDestinations(int cityId);
     }
 }

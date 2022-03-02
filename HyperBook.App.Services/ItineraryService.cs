@@ -80,5 +80,47 @@ namespace HyperBook.App.Services
                 throw new Exception(ex.Message);
             }
         }
+
+
+        public IEnumerable<DestinationResponse> GetDestinations(int cityId)
+        {
+            try
+            {
+                var departureCity = _hyperBookContext.Cities.Where(w => w.Id == cityId).FirstOrDefault();
+
+                if(departureCity == null)
+                {
+                    throw new Exception("Invalid cityId.");
+                }
+
+                //Get all the pod schedules for the departing city id
+                var podSchedules = _hyperBookContext.PodSchedules.Where(w => w.CityFrom == cityId).ToList();
+
+                //Get all distinct the arrival cityIds
+                List<int> arrivalCityIds = podSchedules.Select(s => s.CityTo).Distinct().ToList();
+
+                //Get the arrival cityInfo
+                var arrivalCities = _hyperBookContext.Cities.Where(w => arrivalCityIds.Contains(w.Id)).ToList();
+
+                //Flatten out the data and create the response object
+                var destinations = from pod in podSchedules
+                                   join arrivalCity in arrivalCities on pod.CityTo equals arrivalCity.Id
+                                   select new DestinationResponse
+                                   {
+                                       PodId = pod.Id,
+                                       CityFrom = pod.CityFrom,
+                                       CityFromName = departureCity.Name,
+                                       CityTo = new CityWithInfoResponse { Id = arrivalCity.Id, Latitude = arrivalCity.Latitude, Longitude = arrivalCity.Longitude, Name = arrivalCity.Name, State = arrivalCity.State, Timezone = arrivalCity.Timezone },
+                                       DepartureWindow = pod.DepartureWindow,
+                                       Price = pod.Price
+                                   };
+
+                return destinations.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

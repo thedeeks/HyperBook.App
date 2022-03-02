@@ -1,4 +1,5 @@
 ﻿using HyperBook.App.Models.ResponseModels;
+using HyperBook.App.Models.PutModels;
 using System;
 
 namespace HyperBook.App.Interfaces
@@ -20,5 +21,12 @@ namespace HyperBook.App.Interfaces
         /// </summary>        
         /// <returns>Emai, FirstName, LastName</returns>
         UserResponse GetAccountInfo(Guid userId);
+
+
+        /// <summary>
+        /// Updates an existing User
+        /// </summary>
+        /// <param name="user">User Object</param>
+        void UpdateUser(UserUpdateModel user);
     }
 }
