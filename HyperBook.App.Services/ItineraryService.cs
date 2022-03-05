@@ -122,5 +122,50 @@ namespace HyperBook.App.Services
                 throw new Exception(ex.Message);
             }
         }
+
+
+        /// <summary>
+        /// Updates the Trip Status
+        /// </summary>
+        /// <param name="tripId"></param>
+        /// <param name="refStatusId"></param>
+        public void UpdateTripStatus(int tripId, int refStatusId)
+        {
+            try
+            {
+                var trip = _hyperBookContext.Trips.Where(w => w.Id == tripId).FirstOrDefault();
+
+                if(trip.StatusId != refStatusId)
+                {
+                    trip.StatusId = refStatusId;
+                    _hyperBookContext.Trips.Update(trip);
+                    _hyperBookContext.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// Deletes a trip record
+        /// </summary>
+        /// <param name="tripId"></param>
+        public void DeleteTrip(int tripId)
+        {
+            try
+            {
+                var trip = _hyperBookContext.Trips.Where(w => w.Id == tripId).FirstOrDefault();
+
+                _hyperBookContext.Trips.Remove(trip);
+                _hyperBookContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

@@ -238,5 +238,59 @@ namespace HyperBook.App.Api.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+
+
+        /// <summary>
+        /// Updates the Status of a Trip Record.
+        /// </summary>
+        /// <param name="tripUpdateModel"></param>
+        /// <remarks>
+        /// Ref Status
+        /// 1	Pending
+        /// 2	Booked
+        /// 3	Cancelled
+        /// </remarks>
+        /// <returns></returns>
+        [ApiExplorerSettings(GroupName = "HyperBook")]
+        [HttpPut("UpdateTripStatus")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult UpdateTripStatus([Required] UpdateTripModel tripUpdateModel)
+        {
+            try
+            {
+                //Return a 204
+                _itineraryService.UpdateTripStatus(tripUpdateModel.TripId, tripUpdateModel.RefStatusId);
+                return StatusCode(204);
+            }
+            catch (Exception ex)
+            {
+                //Returns a 500
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [ApiExplorerSettings(GroupName = "HyperBook")]
+        [HttpDelete("DeleteTrip")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult DeleteTrip([Required] int tripId)
+        {
+            try
+            {
+                //Returns a 201
+                _itineraryService.DeleteTrip(tripId);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                //returns a 500
+                return StatusCode(500, ex.Message);
+            }
+        }
+
     }
 }
